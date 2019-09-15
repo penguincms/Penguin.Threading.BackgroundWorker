@@ -2,12 +2,12 @@
 
 namespace Penguin.Threading
 {
-    public class BackgroundWorkerBase
+    public class BackgroundWorker
     {
         public bool CancellationPending { get; protected set; }
         public bool IsBusy => InternalWorker.IsBusy;
 
-        public BackgroundWorkerBase()
+        public BackgroundWorker()
         {
             InternalWorker = new System.ComponentModel.BackgroundWorker();
         }

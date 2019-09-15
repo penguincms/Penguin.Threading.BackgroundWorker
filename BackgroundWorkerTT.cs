@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Penguin.Threading
 {
-    public class BackgroundWorker<TArgument, TResult> : BackgroundWorkerBase
+    public class BackgroundWorker<TArgument, TResult> : BackgroundWorker
     {
         public Func<BackgroundWorker<TArgument, TResult>, TArgument, TResult> DoWork;
 

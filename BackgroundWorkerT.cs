@@ -3,7 +3,7 @@ using System.ComponentModel;
 
 namespace Penguin.Threading
 {
-    public class BackgroundWorker<TArgument> : BackgroundWorkerBase
+    public class BackgroundWorker<TArgument> : BackgroundWorker
     {
         public Action<BackgroundWorker<TArgument>, TArgument> DoWork;
         public BackgroundWorker() : base()
