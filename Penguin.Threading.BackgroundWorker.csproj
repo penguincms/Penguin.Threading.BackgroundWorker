@@ -17,12 +17,12 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <WarningsAsErrors>NU1605, CS1591</WarningsAsErrors>
-    <DocumentationFile>BackgroundWorker.xml</DocumentationFile>
+    <DocumentationFile>Penguin.Threading.BackgroundWorker.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
 	<DebugType>full</DebugType>
-    <DocumentationFile>BackgroundWorker.xml</DocumentationFile>
+    <DocumentationFile>Penguin.Threading.BackgroundWorker.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
