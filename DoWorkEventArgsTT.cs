@@ -1,0 +1,24 @@
+﻿using System.ComponentModel;
+
+namespace Penguin.Threading
+{
+    public class DoWorkEventArgs<TArgument, TResult> : CancelEventArgs
+    {
+        public TArgument Argument
+        {
+            get;
+            private set;
+        }
+
+        public TResult Result
+        {
+            get;
+            set;
+        }
+
+        public DoWorkEventArgs(TArgument argument)
+        {
+            Argument = argument;
+        }
+    }
+}
