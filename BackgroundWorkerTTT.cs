@@ -4,8 +4,9 @@ using System.Threading.Tasks;
 
 namespace Penguin.Threading
 {
-    public class BackgroundWorker<TArgument, TProgress, TResult> : BackgroundWorker
+    public class BackgroundWorker<TArgument, TProgress, TResult> : AbstractBackgroundWorker
     {
+        protected TaskCompletionSource<TResult> ResultTaskSource { get; set; }
         public Func<BackgroundWorker<TArgument, TProgress, TResult>, TArgument, TResult> DoWork;
 
         public Action<BackgroundWorker<TArgument, TProgress, TResult>, ProgressChangedEventArgs<TProgress>> ProgressChanged;
@@ -14,6 +15,7 @@ namespace Penguin.Threading
         {
             InternalWorker.DoWork += this.InternalWorker_DoWork;
             InternalWorker.ProgressChanged += this.InternalWorker_ProgressChanged;
+            InternalWorker.RunWorkerCompleted += InternalWorker_RunWorkerCompleted;
         }
 
         public void ReportProgress(int percentProgress) => InternalWorker.ReportProgress(percentProgress);
@@ -29,11 +31,10 @@ namespace Penguin.Threading
             else
             {
                 InternalWorker.RunWorkerAsync(argument);
-                return ResultTaskSource.Task;
             }
-        }
 
-        protected TaskCompletionSource<TResult> ResultTaskSource { get; set; }
+            return ResultTaskSource.Task;
+        }
 
         private void InternalWorker_DoWork(object sender, DoWorkEventArgs e)
         {

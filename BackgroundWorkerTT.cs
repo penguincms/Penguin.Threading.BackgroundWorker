@@ -4,14 +4,16 @@ using System.Threading.Tasks;
 
 namespace Penguin.Threading
 {
-    public class BackgroundWorker<TArgument, TResult> : BackgroundWorker
+    public class BackgroundWorker<TArgument, TResult> : AbstractBackgroundWorker
     {
+        protected TaskCompletionSource<TResult> ResultTaskSource { get; set; }
         public Func<BackgroundWorker<TArgument, TResult>, TArgument, TResult> DoWork;
 
         public BackgroundWorker() : base()
         {
             ResultTaskSource = new TaskCompletionSource<TResult>();
             InternalWorker.DoWork += this.InternalWorker_DoWork;
+            InternalWorker.RunWorkerCompleted += InternalWorker_RunWorkerCompleted;
         }
 
         public Task<TResult> RunWorkerAsync(TArgument argument)
@@ -23,11 +25,10 @@ namespace Penguin.Threading
             else
             {
                 InternalWorker.RunWorkerAsync(argument);
-                return ResultTaskSource.Task;
             }
-        }
 
-        protected TaskCompletionSource<TResult> ResultTaskSource { get; set; }
+            return ResultTaskSource.Task;
+        }
 
         private void InternalWorker_DoWork(object sender, DoWorkEventArgs e)
         {
