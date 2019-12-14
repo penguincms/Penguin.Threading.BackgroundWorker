@@ -75,6 +75,7 @@ namespace Penguin.Threading
 
         private void InternalWorker_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
+            
             DoWork.Invoke(this);
         }
 
