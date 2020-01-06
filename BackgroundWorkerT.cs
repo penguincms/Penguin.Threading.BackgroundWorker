@@ -20,7 +20,7 @@ namespace Penguin.Threading
         {
             if (InternalWorker.IsBusy)
             {
-                ResultTaskSource.SetResult(false);
+                ResultTaskSource.TrySetResult(false);
             }
             else
             {
@@ -37,7 +37,7 @@ namespace Penguin.Threading
 
         private void InternalWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            ResultTaskSource.SetResult(true);
+            ResultTaskSource.TrySetResult(true);
         }
     }
 }
