@@ -7,5 +7,6 @@
     <Description>Generic implementation of a background worker</Description>
     <AssemblyName>Penguin.Threading.BackgroundWorker</AssemblyName>
     <RootNamespace>Penguin.Threading.BackgroundWorker</RootNamespace>
+    <DocumentationFile>Penguin.Threading.BackgroundWorker.xml</DocumentationFile>
   </PropertyGroup>
 </Project>
