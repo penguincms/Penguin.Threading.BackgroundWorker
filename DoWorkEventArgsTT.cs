@@ -18,7 +18,7 @@ namespace Penguin.Threading
 
         public DoWorkEventArgs(TArgument argument)
         {
-            Argument = argument;
+            this.Argument = argument;
         }
     }
 }

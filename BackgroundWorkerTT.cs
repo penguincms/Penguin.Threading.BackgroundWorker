@@ -6,40 +6,40 @@ namespace Penguin.Threading
 {
     public class BackgroundWorker<TArgument, TResult> : AbstractBackgroundWorker
     {
-        protected TaskCompletionSource<TResult> ResultTaskSource { get; set; }
         public Func<BackgroundWorker<TArgument, TResult>, TArgument, TResult> DoWork;
+        protected TaskCompletionSource<TResult> ResultTaskSource { get; set; }
 
         public BackgroundWorker() : base()
         {
-            ResultTaskSource = new TaskCompletionSource<TResult>();
-            InternalWorker.DoWork += this.InternalWorker_DoWork;
-            InternalWorker.RunWorkerCompleted += InternalWorker_RunWorkerCompleted;
+            this.ResultTaskSource = new TaskCompletionSource<TResult>();
+            this.InternalWorker.DoWork += this.InternalWorker_DoWork;
+            this.InternalWorker.RunWorkerCompleted += this.InternalWorker_RunWorkerCompleted;
         }
 
         public Task<TResult> RunWorkerAsync(TArgument argument)
         {
-            if (InternalWorker.IsBusy)
+            if (this.InternalWorker.IsBusy)
             {
                 return null;
             }
             else
             {
-                InternalWorker.RunWorkerAsync(argument);
+                this.InternalWorker.RunWorkerAsync(argument);
             }
 
-            return ResultTaskSource.Task;
+            return this.ResultTaskSource.Task;
         }
 
         private void InternalWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            TResult result = DoWork.Invoke(this, (TArgument)e.Argument);
+            TResult result = this.DoWork.Invoke(this, (TArgument)e.Argument);
 
             e.Result = result;
         }
 
         private void InternalWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            ResultTaskSource.TrySetResult((TResult)e.Result);
+            this.ResultTaskSource.TrySetResult((TResult)e.Result);
         }
     }
 }

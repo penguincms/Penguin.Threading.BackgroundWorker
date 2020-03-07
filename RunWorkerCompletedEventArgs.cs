@@ -24,9 +24,9 @@ namespace Penguin.Threading
 
         public RunWorkerCompletedEventArgs(T result, Exception error, bool cancelled)
         {
-            Result = result;
-            Error = error;
-            Cancelled = cancelled;
+            this.Result = result;
+            this.Error = error;
+            this.Cancelled = cancelled;
         }
     }
 }

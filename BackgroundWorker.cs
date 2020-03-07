@@ -1,20 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Penguin.Threading
 {
     public class BackgroundWorker : AbstractBackgroundWorker
     {
-        protected TaskCompletionSource<bool> ResultTaskSource { get; set; }
         public Action<BackgroundWorker> DoWork;
+        protected TaskCompletionSource<bool> ResultTaskSource { get; set; }
 
         public BackgroundWorker() : base()
         {
-            ResultTaskSource = new TaskCompletionSource<bool>();
-            InternalWorker.DoWork += InternalWorker_DoWork;
-            InternalWorker.RunWorkerCompleted += this.InternalWorker_RunWorkerCompleted;
+            this.ResultTaskSource = new TaskCompletionSource<bool>();
+            this.InternalWorker.DoWork += this.InternalWorker_DoWork;
+            this.InternalWorker.RunWorkerCompleted += this.InternalWorker_RunWorkerCompleted;
         }
 
         public static BackgroundWorker Create(Action<BackgroundWorker> doWork)
@@ -61,27 +59,26 @@ namespace Penguin.Threading
 
         public Task<bool> RunWorkerAsync()
         {
-            if (InternalWorker.IsBusy)
+            if (this.InternalWorker.IsBusy)
             {
-                ResultTaskSource.TrySetResult(false);
+                this.ResultTaskSource.TrySetResult(false);
             }
             else
             {
-                InternalWorker.RunWorkerAsync();
+                this.InternalWorker.RunWorkerAsync();
             }
 
-            return ResultTaskSource.Task;
+            return this.ResultTaskSource.Task;
         }
 
         private void InternalWorker_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
-            
-            DoWork.Invoke(this);
+            this.DoWork.Invoke(this);
         }
 
         private void InternalWorker_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
         {
-            ResultTaskSource.TrySetResult(true);
+            this.ResultTaskSource.TrySetResult(true);
         }
     }
 }
