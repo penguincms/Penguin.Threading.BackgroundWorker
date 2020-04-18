@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="Penguin.Projects.Shared\Penguin.Projects.Shared.csproj" />
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageProjectUrl>https://github.com/penguincms/Penguin.Threading.BackgroundWorker</PackageProjectUrl>
+    <Version>1.0.4</Version>
+    <Description>Generic implementation of a background worker</Description>
+    <AssemblyName>Penguin.Threading.BackgroundWorker</AssemblyName>
+    <RootNamespace>Penguin.Threading.BackgroundWorker</RootNamespace>
+    <DocumentationFile>Penguin.Threading.BackgroundWorker.xml</DocumentationFile>
+  </PropertyGroup>
+</Project>
