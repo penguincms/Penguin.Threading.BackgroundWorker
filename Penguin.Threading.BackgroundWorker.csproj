@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <PackageProjectUrl>https://github.com/penguincms/Penguin.Threading.BackgroundWorker</PackageProjectUrl>
-    <Version>1.0.4</Version>
+    <Version>5.0.0</Version>
     <Description>Generic implementation of a background worker</Description>
     <AssemblyName>Penguin.Threading.BackgroundWorker</AssemblyName>
     <RootNamespace>Penguin.Threading.BackgroundWorker</RootNamespace>
