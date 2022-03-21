@@ -71,14 +71,8 @@ namespace Penguin.Threading
             return this.ResultTaskSource.Task;
         }
 
-        private void InternalWorker_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
-        {
-            this.DoWork.Invoke(this);
-        }
+        private void InternalWorker_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e) => this.DoWork.Invoke(this);
 
-        private void InternalWorker_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
-        {
-            this.ResultTaskSource.TrySetResult(true);
-        }
+        private void InternalWorker_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e) => this.ResultTaskSource.TrySetResult(true);
     }
 }

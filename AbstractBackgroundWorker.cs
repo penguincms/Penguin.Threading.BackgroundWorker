@@ -12,9 +12,6 @@
             this.InternalWorker = new System.ComponentModel.BackgroundWorker();
         }
 
-        public void CancelAsync()
-        {
-            this.CancellationPending = true;
-        }
+        public void CancelAsync() => this.CancellationPending = true;
     }
 }

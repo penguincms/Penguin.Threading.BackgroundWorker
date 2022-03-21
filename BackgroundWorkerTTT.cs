@@ -17,15 +17,9 @@ namespace Penguin.Threading
             this.InternalWorker.RunWorkerCompleted += this.InternalWorker_RunWorkerCompleted;
         }
 
-        public void ReportProgress(int percentProgress)
-        {
-            this.InternalWorker.ReportProgress(percentProgress);
-        }
+        public void ReportProgress(int percentProgress) => this.InternalWorker.ReportProgress(percentProgress);
 
-        public void ReportProgress(int percentProgress, ProgressChangedEventArgs<TProgress> userState)
-        {
-            this.InternalWorker.ReportProgress(percentProgress, userState);
-        }
+        public void ReportProgress(int percentProgress, ProgressChangedEventArgs<TProgress> userState) => this.InternalWorker.ReportProgress(percentProgress, userState);
 
         public Task<TResult> RunWorkerAsync(TArgument argument)
         {
@@ -48,14 +42,8 @@ namespace Penguin.Threading
             e.Result = result;
         }
 
-        private void InternalWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            this.ProgressChanged?.Invoke(this, new ProgressChangedEventArgs<TProgress>(e.ProgressPercentage, (TProgress)e.UserState));
-        }
+        private void InternalWorker_ProgressChanged(object sender, ProgressChangedEventArgs e) => this.ProgressChanged?.Invoke(this, new ProgressChangedEventArgs<TProgress>(e.ProgressPercentage, (TProgress)e.UserState));
 
-        private void InternalWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            this.ResultTaskSource.TrySetResult((TResult)e.Result);
-        }
+        private void InternalWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) => this.ResultTaskSource.TrySetResult((TResult)e.Result);
     }
 }

@@ -37,9 +37,6 @@ namespace Penguin.Threading
             e.Result = result;
         }
 
-        private void InternalWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            this.ResultTaskSource.TrySetResult((TResult)e.Result);
-        }
+        private void InternalWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) => this.ResultTaskSource.TrySetResult((TResult)e.Result);
     }
 }

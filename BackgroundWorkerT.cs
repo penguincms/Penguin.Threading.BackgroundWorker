@@ -30,14 +30,8 @@ namespace Penguin.Threading
             return this.ResultTaskSource.Task;
         }
 
-        private void InternalWorker_DoWork(object sender, DoWorkEventArgs e)
-        {
-            this.DoWork.Invoke(this, (TArgument)e.Argument);
-        }
+        private void InternalWorker_DoWork(object sender, DoWorkEventArgs e) => this.DoWork.Invoke(this, (TArgument)e.Argument);
 
-        private void InternalWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            this.ResultTaskSource.TrySetResult(true);
-        }
+        private void InternalWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) => this.ResultTaskSource.TrySetResult(true);
     }
 }
