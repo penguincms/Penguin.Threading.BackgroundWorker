@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Penguin.Threading
+namespace Penguin.Threading.BackgroundWorker
 {
     public sealed class RunWorkerCompletedEventArgs<T> : EventArgs
     {

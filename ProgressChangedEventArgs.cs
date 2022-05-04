@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Penguin.Threading
+namespace Penguin.Threading.BackgroundWorker
 {
     public class ProgressChangedEventArgs<T> : EventArgs
     {

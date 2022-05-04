@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace Penguin.Threading
+namespace Penguin.Threading.BackgroundWorker
 {
     public class BackgroundWorker : AbstractBackgroundWorker
     {
@@ -61,7 +61,7 @@ namespace Penguin.Threading
         {
             if (this.InternalWorker.IsBusy)
             {
-                this.ResultTaskSource.TrySetResult(false);
+                _ = this.ResultTaskSource.TrySetResult(false);
             }
             else
             {
@@ -71,8 +71,14 @@ namespace Penguin.Threading
             return this.ResultTaskSource.Task;
         }
 
-        private void InternalWorker_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e) => this.DoWork.Invoke(this);
+        private void InternalWorker_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        {
+            this.DoWork.Invoke(this);
+        }
 
-        private void InternalWorker_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e) => this.ResultTaskSource.TrySetResult(true);
+        private void InternalWorker_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
+        {
+            _ = this.ResultTaskSource.TrySetResult(true);
+        }
     }
 }

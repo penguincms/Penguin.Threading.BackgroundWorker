@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace Penguin.Threading
+namespace Penguin.Threading.BackgroundWorker
 {
     public class DoWorkEventArgs<TArgument, TResult> : CancelEventArgs
     {

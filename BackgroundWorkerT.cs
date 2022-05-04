@@ -1,8 +1,59 @@
-﻿using System;
+﻿
+/* Unmerged change from project 'Penguin.Threading.BackgroundWorker.Local (net5.0)'
+Before:
+using System;
+After:
+using Penguin.Threading.BackgroundWorker;
+using Penguin.Threading.BackgroundWorker.BackgroundWorker;
+using System;
+*/
+
+/* Unmerged change from project 'Penguin.Threading.BackgroundWorker.Local (netstandard2.1)'
+Before:
+using System;
+After:
+using Penguin.Threading.BackgroundWorker;
+using System;
+*/
+
+/* Unmerged change from project 'Penguin.Threading.BackgroundWorker.Local (net5.0)'
+Before:
+using Penguin.Threading.BackgroundWorker.BackgroundWorker;
+After:
+using Penguin;
+using Penguin.Threading;
+using Penguin.Threading.BackgroundWorker;
+using Penguin.Threading.BackgroundWorker.BackgroundWorker;
+*/
+
+/* Unmerged change from project 'Penguin.Threading.BackgroundWorker.Local (netstandard2.1)'
+Before:
+using Penguin.Threading.BackgroundWorker.BackgroundWorker;
+After:
+using Penguin;
+using Penguin.Threading;
+using Penguin.Threading.BackgroundWorker;
+using Penguin.Threading.BackgroundWorker.BackgroundWorker;
+*/
+using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
 
-namespace Penguin.Threading
+
+/* Unmerged change from project 'Penguin.Threading.BackgroundWorker.Local (net5.0)'
+Before:
+namespace Penguin.Threading.BackgroundWorker
+After:
+namespace Penguin.Threading.BackgroundWorker.BackgroundWorker.BackgroundWorker
+*/
+
+/* Unmerged change from project 'Penguin.Threading.BackgroundWorker.Local (netstandard2.1)'
+Before:
+namespace Penguin.Threading.BackgroundWorker
+After:
+namespace Penguin.Threading.BackgroundWorker.BackgroundWorker
+*/
+namespace Penguin.Threading.BackgroundWorker
 {
     public class BackgroundWorker<TArgument> : AbstractBackgroundWorker
     {
@@ -20,7 +71,7 @@ namespace Penguin.Threading
         {
             if (this.InternalWorker.IsBusy)
             {
-                this.ResultTaskSource.TrySetResult(false);
+                _ = this.ResultTaskSource.TrySetResult(false);
             }
             else
             {
@@ -30,8 +81,14 @@ namespace Penguin.Threading
             return this.ResultTaskSource.Task;
         }
 
-        private void InternalWorker_DoWork(object sender, DoWorkEventArgs e) => this.DoWork.Invoke(this, (TArgument)e.Argument);
+        private void InternalWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            this.DoWork.Invoke(this, (TArgument)e.Argument);
+        }
 
-        private void InternalWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) => this.ResultTaskSource.TrySetResult(true);
+        private void InternalWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            _ = this.ResultTaskSource.TrySetResult(true);
+        }
     }
 }

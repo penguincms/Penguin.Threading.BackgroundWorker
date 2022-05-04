@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Threading.Tasks;
 
-namespace Penguin.Threading
+namespace Penguin.Threading.BackgroundWorker
 {
     public class BackgroundWorker<TArgument, TResult> : AbstractBackgroundWorker
     {
@@ -37,6 +37,9 @@ namespace Penguin.Threading
             e.Result = result;
         }
 
-        private void InternalWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) => this.ResultTaskSource.TrySetResult((TResult)e.Result);
+        private void InternalWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            _ = this.ResultTaskSource.TrySetResult((TResult)e.Result);
+        }
     }
 }

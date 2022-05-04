@@ -1,4 +1,4 @@
-﻿namespace Penguin.Threading
+﻿namespace Penguin.Threading.BackgroundWorker
 {
     public abstract class AbstractBackgroundWorker
     {
@@ -12,6 +12,9 @@
             this.InternalWorker = new System.ComponentModel.BackgroundWorker();
         }
 
-        public void CancelAsync() => this.CancellationPending = true;
+        public void CancelAsync()
+        {
+            this.CancellationPending = true;
+        }
     }
 }
