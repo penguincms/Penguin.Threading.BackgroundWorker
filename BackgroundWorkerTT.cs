@@ -7,6 +7,7 @@ namespace Penguin.Threading.BackgroundWorker
     public class BackgroundWorker<TArgument, TResult> : AbstractBackgroundWorker
     {
         public Func<BackgroundWorker<TArgument, TResult>, TArgument, TResult> DoWork { get; set; }
+
         protected TaskCompletionSource<TResult> ResultTaskSource { get; set; }
 
         public BackgroundWorker() : base()
