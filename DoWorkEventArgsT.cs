@@ -12,7 +12,7 @@ namespace Penguin.Threading.BackgroundWorker
 
         public DoWorkEventArgs(TArgument argument)
         {
-            this.Argument = argument;
+            Argument = argument;
         }
     }
 }

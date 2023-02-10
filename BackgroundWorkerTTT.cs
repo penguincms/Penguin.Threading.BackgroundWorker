@@ -12,50 +12,50 @@ namespace Penguin.Threading.BackgroundWorker
 
         public BackgroundWorker() : base()
         {
-            this.InternalWorker.DoWork += this.InternalWorker_DoWork;
-            this.InternalWorker.ProgressChanged += this.InternalWorker_ProgressChanged;
-            this.InternalWorker.RunWorkerCompleted += this.InternalWorker_RunWorkerCompleted;
+            InternalWorker.DoWork += InternalWorker_DoWork;
+            InternalWorker.ProgressChanged += InternalWorker_ProgressChanged;
+            InternalWorker.RunWorkerCompleted += InternalWorker_RunWorkerCompleted;
         }
 
         public void ReportProgress(int percentProgress)
         {
-            this.InternalWorker.ReportProgress(percentProgress);
+            InternalWorker.ReportProgress(percentProgress);
         }
 
         public void ReportProgress(int percentProgress, ProgressChangedEventArgs<TProgress> userState)
         {
-            this.InternalWorker.ReportProgress(percentProgress, userState);
+            InternalWorker.ReportProgress(percentProgress, userState);
         }
 
         public Task<TResult> RunWorkerAsync(TArgument argument)
         {
-            if (this.InternalWorker.IsBusy)
+            if (InternalWorker.IsBusy)
             {
                 return null;
             }
             else
             {
-                this.InternalWorker.RunWorkerAsync(argument);
+                InternalWorker.RunWorkerAsync(argument);
             }
 
-            return this.ResultTaskSource.Task;
+            return ResultTaskSource.Task;
         }
 
         private void InternalWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            TResult result = this.DoWork.Invoke(this, (TArgument)e.Argument);
+            TResult result = DoWork.Invoke(this, (TArgument)e.Argument);
 
             e.Result = result;
         }
 
         private void InternalWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            this.ProgressChanged?.Invoke(this, new ProgressChangedEventArgs<TProgress>(e.ProgressPercentage, (TProgress)e.UserState));
+            ProgressChanged?.Invoke(this, new ProgressChangedEventArgs<TProgress>(e.ProgressPercentage, (TProgress)e.UserState));
         }
 
         private void InternalWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            _ = this.ResultTaskSource.TrySetResult((TResult)e.Result);
+            _ = ResultTaskSource.TrySetResult((TResult)e.Result);
         }
     }
 }

@@ -18,8 +18,8 @@ namespace Penguin.Threading.BackgroundWorker
 
         public ProgressChangedEventArgs(int progressPercentage, T userState)
         {
-            this.ProgressPercentage = progressPercentage;
-            this.UserState = userState;
+            ProgressPercentage = progressPercentage;
+            UserState = userState;
         }
     }
 }

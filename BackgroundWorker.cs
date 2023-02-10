@@ -10,14 +10,14 @@ namespace Penguin.Threading.BackgroundWorker
 
         public BackgroundWorker() : base()
         {
-            this.ResultTaskSource = new TaskCompletionSource<bool>();
-            this.InternalWorker.DoWork += this.InternalWorker_DoWork;
-            this.InternalWorker.RunWorkerCompleted += this.InternalWorker_RunWorkerCompleted;
+            ResultTaskSource = new TaskCompletionSource<bool>();
+            InternalWorker.DoWork += InternalWorker_DoWork;
+            InternalWorker.RunWorkerCompleted += InternalWorker_RunWorkerCompleted;
         }
 
         public static BackgroundWorker Create(Action<BackgroundWorker> doWork)
         {
-            BackgroundWorker toReturn = new BackgroundWorker
+            BackgroundWorker toReturn = new()
             {
                 DoWork = doWork
             };
@@ -27,7 +27,7 @@ namespace Penguin.Threading.BackgroundWorker
 
         public static BackgroundWorker<TArgument> Create<TArgument>(Action<BackgroundWorker<TArgument>, TArgument> doWork)
         {
-            BackgroundWorker<TArgument> toReturn = new BackgroundWorker<TArgument>
+            BackgroundWorker<TArgument> toReturn = new()
             {
                 DoWork = doWork
             };
@@ -37,7 +37,7 @@ namespace Penguin.Threading.BackgroundWorker
 
         public static BackgroundWorker<TArgument, TResult> Create<TArgument, TResult>(Func<BackgroundWorker<TArgument, TResult>, TArgument, TResult> doWork)
         {
-            BackgroundWorker<TArgument, TResult> toReturn = new BackgroundWorker<TArgument, TResult>
+            BackgroundWorker<TArgument, TResult> toReturn = new()
             {
                 DoWork = doWork
             };
@@ -47,7 +47,7 @@ namespace Penguin.Threading.BackgroundWorker
 
         public static BackgroundWorker<TArgument, TProgress, TResult> Create<TArgument, TProgress, TResult>(Func<BackgroundWorker<TArgument, TProgress, TResult>, TArgument, TResult> doWork, Action<BackgroundWorker<TArgument, TProgress, TResult>, ProgressChangedEventArgs<TProgress>> progressChanged)
         {
-            BackgroundWorker<TArgument, TProgress, TResult> toReturn = new BackgroundWorker<TArgument, TProgress, TResult>
+            BackgroundWorker<TArgument, TProgress, TResult> toReturn = new()
             {
                 DoWork = doWork,
 
@@ -59,26 +59,26 @@ namespace Penguin.Threading.BackgroundWorker
 
         public Task<bool> RunWorkerAsync()
         {
-            if (this.InternalWorker.IsBusy)
+            if (InternalWorker.IsBusy)
             {
-                _ = this.ResultTaskSource.TrySetResult(false);
+                _ = ResultTaskSource.TrySetResult(false);
             }
             else
             {
-                this.InternalWorker.RunWorkerAsync();
+                InternalWorker.RunWorkerAsync();
             }
 
-            return this.ResultTaskSource.Task;
+            return ResultTaskSource.Task;
         }
 
         private void InternalWorker_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
-            this.DoWork.Invoke(this);
+            DoWork.Invoke(this);
         }
 
         private void InternalWorker_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
         {
-            _ = this.ResultTaskSource.TrySetResult(true);
+            _ = ResultTaskSource.TrySetResult(true);
         }
     }
 }

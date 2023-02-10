@@ -3,18 +3,18 @@
     public abstract class AbstractBackgroundWorker
     {
         public bool CancellationPending { get; protected set; }
-        public bool IsBusy => this.InternalWorker.IsBusy;
+        public bool IsBusy => InternalWorker.IsBusy;
 
         protected System.ComponentModel.BackgroundWorker InternalWorker { get; set; }
 
-        public AbstractBackgroundWorker()
+        protected AbstractBackgroundWorker()
         {
-            this.InternalWorker = new System.ComponentModel.BackgroundWorker();
+            InternalWorker = new System.ComponentModel.BackgroundWorker();
         }
 
         public void CancelAsync()
         {
-            this.CancellationPending = true;
+            CancellationPending = true;
         }
     }
 }

@@ -11,35 +11,35 @@ namespace Penguin.Threading.BackgroundWorker
 
         public BackgroundWorker() : base()
         {
-            this.ResultTaskSource = new TaskCompletionSource<TResult>();
-            this.InternalWorker.DoWork += this.InternalWorker_DoWork;
-            this.InternalWorker.RunWorkerCompleted += this.InternalWorker_RunWorkerCompleted;
+            ResultTaskSource = new TaskCompletionSource<TResult>();
+            InternalWorker.DoWork += InternalWorker_DoWork;
+            InternalWorker.RunWorkerCompleted += InternalWorker_RunWorkerCompleted;
         }
 
         public Task<TResult> RunWorkerAsync(TArgument argument)
         {
-            if (this.InternalWorker.IsBusy)
+            if (InternalWorker.IsBusy)
             {
                 return null;
             }
             else
             {
-                this.InternalWorker.RunWorkerAsync(argument);
+                InternalWorker.RunWorkerAsync(argument);
             }
 
-            return this.ResultTaskSource.Task;
+            return ResultTaskSource.Task;
         }
 
         private void InternalWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            TResult result = this.DoWork.Invoke(this, (TArgument)e.Argument);
+            TResult result = DoWork.Invoke(this, (TArgument)e.Argument);
 
             e.Result = result;
         }
 
         private void InternalWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            _ = this.ResultTaskSource.TrySetResult((TResult)e.Result);
+            _ = ResultTaskSource.TrySetResult((TResult)e.Result);
         }
     }
 }
